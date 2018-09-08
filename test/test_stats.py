@@ -20,7 +20,7 @@ class TestMean(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -90,7 +90,7 @@ class TestGeometricMean(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -159,7 +159,7 @@ class TestMedian(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -229,7 +229,7 @@ class TestMode(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -299,7 +299,7 @@ class TestStd(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -368,7 +368,7 @@ class TestCv(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -442,7 +442,7 @@ class TestGeomStd(unittest.TestCase):
         self.a = np.array([[1, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 1, 2, 1, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
         # Transform fluorescence data to a.u. so that there are no zeros
         self.d = FlowCal.transform.to_rfi(
             self.d,
@@ -518,7 +518,7 @@ class TestGeomCv(unittest.TestCase):
         self.a = np.array([[1, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 1, 2, 1, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
         # Transform fluorescence data to a.u. so that there are no zeros
         self.d = FlowCal.transform.to_rfi(
             self.d,
@@ -595,7 +595,7 @@ class TestIqr(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """
@@ -671,7 +671,7 @@ class TestRcv(unittest.TestCase):
         self.a = np.array([[0, 8, 6, 1, 1, 6, 5, 9, 2, 2],
                            [9, 9, 2, 0, 2, 0, 8, 8, 4, 7]]).T
         # FCSFile
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
 
     def test_array(self):
         """

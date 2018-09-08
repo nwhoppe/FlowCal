@@ -543,7 +543,7 @@ class TestDensity2dGate1(unittest.TestCase):
                                channels = ['FSC', 'SSC'],
                                gate_fraction = 0.3)[0]
         """
-        self.ungated_data = FlowCal.io.FCSData('test/Data003.fcs')
+        self.ungated_data = FlowCal.fcs_io.FCSData('test/Data003.fcs')
         self.gated_data = np.load('test/Data003_gate_density2d.npy')
 
     def test_density2d(self):

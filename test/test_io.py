@@ -9,7 +9,7 @@ import six
 
 import numpy as np
 
-import FlowCal.io
+import FlowCal.fcs_io
 
 """
 Files to test:
@@ -34,7 +34,7 @@ class TestFCSDataLoading(unittest.TestCase):
         Testing proper loading from FCS file (2.0, CellQuest Pro).
 
         """
-        d = FlowCal.io.FCSData(filenames[0])
+        d = FlowCal.fcs_io.FCSData(filenames[0])
         self.assertEqual(d.shape, (20949, 6))
         self.assertEqual(d.channels,
             ('FSC-H',
@@ -49,7 +49,7 @@ class TestFCSDataLoading(unittest.TestCase):
         Testing proper loading from FCS file (2.0, FACSDiva).
 
         """
-        d = FlowCal.io.FCSData(filenames[1])
+        d = FlowCal.fcs_io.FCSData(filenames[1])
         self.assertEqual(d.shape, (20000, 9))
         self.assertEqual(d.channels,
             ('FSC-A',
@@ -68,7 +68,7 @@ class TestFCSDataLoading(unittest.TestCase):
         Testing proper loading from FCS file (3.0, FlowJo).
 
         """
-        d = FlowCal.io.FCSData(filenames[2])
+        d = FlowCal.fcs_io.FCSData(filenames[2])
         self.assertEqual(d.shape, (25000, 8))
         self.assertEqual(d.channels,
             ('TIME',
@@ -86,7 +86,7 @@ class TestFCSDataLoading(unittest.TestCase):
         Testing proper loading from FCS file (3.0, Floating-point).
 
         """
-        d = FlowCal.io.FCSData(filenames[3])
+        d = FlowCal.fcs_io.FCSData(filenames[3])
         self.assertEqual(d.shape, (50000, 14))
         self.assertEqual(d.channels,
             ('FSC-A',
@@ -125,7 +125,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -141,7 +141,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -160,7 +160,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -179,7 +179,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim)
 
     def test_primary_delim_in_keyword_1(self):
@@ -192,7 +192,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key/1':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -208,7 +208,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1':'value/1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -224,7 +224,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key/2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -240,7 +240,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2':'value/2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -256,7 +256,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key/3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -272,7 +272,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3':'value/3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -288,7 +288,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim)
 
     def test_primary_delim_in_keyword_4(self):
@@ -301,7 +301,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1/':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -317,7 +317,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1/','key2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -333,7 +333,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2/':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -349,7 +349,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2/','key3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -365,7 +365,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3/':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -381,7 +381,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3/'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -397,7 +397,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -413,7 +413,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k//1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -429,7 +429,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v/1/','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -445,7 +445,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k/2//':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -461,7 +461,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v///2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -477,7 +477,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k//3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -493,7 +493,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v//3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -509,7 +509,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3//'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1),
@@ -525,7 +525,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim)
    
     ###
@@ -542,7 +542,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -560,7 +560,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -579,7 +579,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, supplemental=True)
 
     def test_supp_three_key_value(self):
@@ -592,7 +592,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -610,7 +610,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -631,7 +631,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -652,7 +652,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -670,7 +670,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key/1':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -688,7 +688,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key/1':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -706,7 +706,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1':'value/1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -724,7 +724,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1':'value/1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -742,7 +742,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key/2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -760,7 +760,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key/2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -778,7 +778,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2':'value/2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -796,7 +796,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2':'value/2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -814,7 +814,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key/3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -832,7 +832,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key/3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -850,7 +850,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3':'value/3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -868,7 +868,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3':'value/3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -886,7 +886,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim,
                 supplemental=True)
 
@@ -900,7 +900,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim,
                 supplemental=True)
 
@@ -914,7 +914,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1/':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -932,7 +932,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'key1/':'value1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -950,7 +950,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1/','key2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -968,7 +968,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1/','key2':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -986,7 +986,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2/':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1004,7 +1004,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','key2/':'value2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1022,7 +1022,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2/','key3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1040,7 +1040,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2/','key3':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1058,7 +1058,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3/':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1076,7 +1076,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','key3/':'value3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1094,7 +1094,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3/'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1112,7 +1112,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3/'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1130,7 +1130,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1148,7 +1148,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1166,7 +1166,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k//1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1184,7 +1184,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k//1':'v1','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1202,7 +1202,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v/1/','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1220,7 +1220,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v/1/','k2':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1238,7 +1238,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k/2//':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1256,7 +1256,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k/2//':'v2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1274,7 +1274,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v///2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1292,7 +1292,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v///2','k3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1310,7 +1310,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k//3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1328,7 +1328,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k//3':'v3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1346,7 +1346,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v//3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1364,7 +1364,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v//3'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1382,7 +1382,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3//'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1400,7 +1400,7 @@ class TestReadTextSegment(unittest.TestCase):
         text_dict        = {'k1':'v1','k2':'v2','k3':'v3//'}
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertEqual(
-            FlowCal.io.read_fcs_text_segment(
+            FlowCal.fcs_io.read_fcs_text_segment(
                 buf=buf,
                 begin=0,
                 end=len(raw_text_segment)-1,
@@ -1418,7 +1418,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim,
                 supplemental=True)
 
@@ -1432,7 +1432,7 @@ class TestReadTextSegment(unittest.TestCase):
         buf              = six.BytesIO(six.b(raw_text_segment))
         self.assertRaises(
             ValueError,
-            FlowCal.io.read_fcs_text_segment,
+            FlowCal.fcs_io.read_fcs_text_segment,
             buf=buf, begin=0, end=len(raw_text_segment)-1, delim=delim,
                 supplemental=True)
 
@@ -1442,7 +1442,7 @@ class TestFCSParseTimeString(unittest.TestCase):
         Test that _parse_time_string() returns None when the input is None.
 
         """
-        t = FlowCal.io.FCSData._parse_time_string(None)
+        t = FlowCal.fcs_io.FCSData._parse_time_string(None)
         self.assertEqual(t, None)
 
     def test_parse_fcs2(self):
@@ -1450,7 +1450,7 @@ class TestFCSParseTimeString(unittest.TestCase):
         Test that _parse_time_string() interprets the FCS2.0 time format.
 
         """
-        t = FlowCal.io.FCSData._parse_time_string("20:15:43")
+        t = FlowCal.fcs_io.FCSData._parse_time_string("20:15:43")
         self.assertEqual(t, datetime.time(20, 15, 43))
 
     def test_parse_fcs3(self):
@@ -1458,7 +1458,7 @@ class TestFCSParseTimeString(unittest.TestCase):
         Test that _parse_time_string() interprets the FCS3.0 time format.
 
         """
-        t = FlowCal.io.FCSData._parse_time_string("20:15:43:20")
+        t = FlowCal.fcs_io.FCSData._parse_time_string("20:15:43:20")
         self.assertEqual(t, datetime.time(20, 15, 43, 333333))
 
     def test_parse_fcs3_1(self):
@@ -1466,7 +1466,7 @@ class TestFCSParseTimeString(unittest.TestCase):
         Test that _parse_time_string() interprets the FCS3.1 time format.
 
         """
-        t = FlowCal.io.FCSData._parse_time_string("20:15:43.27")
+        t = FlowCal.fcs_io.FCSData._parse_time_string("20:15:43.27")
         self.assertEqual(t, datetime.time(20, 15, 43, 270000))
 
     def test_parse_undefined(self):
@@ -1474,7 +1474,7 @@ class TestFCSParseTimeString(unittest.TestCase):
         Test that _parse_time_string() returns None for undefined inputs.
 
         """
-        t = FlowCal.io.FCSData._parse_time_string("i'm undefined")
+        t = FlowCal.fcs_io.FCSData._parse_time_string("i'm undefined")
         self.assertEqual(t, None)
 
 class TestFCSAttributesAmplificationType(unittest.TestCase):
@@ -1493,7 +1493,7 @@ class TestFCSAttributesAmplificationType(unittest.TestCase):
 
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def test_attribute(self):
         """
@@ -1591,7 +1591,7 @@ class TestFCSAttributesDetectorVoltage(unittest.TestCase):
 
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def test_attribute(self):
         """
@@ -1688,7 +1688,7 @@ class TestFCSAttributesAmplifierGain(unittest.TestCase):
 
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def test_attribute(self):
         """
@@ -1789,7 +1789,7 @@ class TestFCSAttributesRange(unittest.TestCase):
 
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def assert_list_of_arrays_equal(self, l1, l2):
         self.assertEqual(len(l1), len(l2))
@@ -1872,7 +1872,7 @@ class TestFCSAttributesResolution(unittest.TestCase):
 
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def test_attribute(self):
         """
@@ -1984,7 +1984,7 @@ class TestFCSHistBins(unittest.TestCase):
                         np.arange(262145) - 0.5, np.arange(262145) - 0.5]
     """
     def setUp(self):
-        self.d = [FlowCal.io.FCSData(filenames[i]) for i in range(4)]
+        self.d = [FlowCal.fcs_io.FCSData(filenames[i]) for i in range(4)]
 
     def assert_list_of_arrays_equal(self, l1, l2):
         self.assertEqual(len(l1), len(l2))
@@ -2227,7 +2227,7 @@ class TestFCSHistBins(unittest.TestCase):
 
 class TestFCSAttributes(unittest.TestCase):
     def setUp(self):
-        self.d = FlowCal.io.FCSData(filenames[0])
+        self.d = FlowCal.fcs_io.FCSData(filenames[0])
         self.n_samples = self.d.shape[0]
 
     def test_str(self):
@@ -2302,7 +2302,7 @@ class TestFCSAttributes(unittest.TestCase):
 
 class TestFCSAttributes3(unittest.TestCase):
     def setUp(self):
-        self.d = FlowCal.io.FCSData(filenames[2])
+        self.d = FlowCal.fcs_io.FCSData(filenames[2])
         self.n_samples = self.d.shape[0]
 
     def test_str(self):
@@ -2377,7 +2377,7 @@ class TestFCSAttributes3(unittest.TestCase):
 
 class TestFCSAttributesFloating(unittest.TestCase):
     def setUp(self):
-        self.d = FlowCal.io.FCSData(filenames[3])
+        self.d = FlowCal.fcs_io.FCSData(filenames[3])
         self.n_samples = self.d.shape[0]
 
     def test_str(self):
@@ -2456,7 +2456,7 @@ class TestFCSAttributesFloating(unittest.TestCase):
 
 class TestFCSDataSlicing(unittest.TestCase):
     def setUp(self):
-        self.d = FlowCal.io.FCSData(filenames[0])
+        self.d = FlowCal.fcs_io.FCSData(filenames[0])
         self.n_samples = self.d.shape[0]
 
     def test_1d_slicing_with_scalar(self):
@@ -2465,7 +2465,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[1]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (6,))
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
@@ -2476,7 +2476,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[list(range(10))]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (10,6))
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
@@ -2487,7 +2487,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[:,2]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (self.n_samples,))
         self.assertEqual(ds.channels, ('FL1-H',))
 
@@ -2497,7 +2497,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[:,'SSC-H']
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (self.n_samples,))
         self.assertEqual(ds.channels, ('SSC-H', ))
 
@@ -2507,7 +2507,7 @@ class TestFCSDataSlicing(unittest.TestCase):
         object.
         """
         ds = self.d[:,[1,3]]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (self.n_samples,2))
         self.assertEqual(ds.channels, ('SSC-H', 'FL2-H'))
 
@@ -2518,7 +2518,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[:,['FSC-H', 'FL3-H']]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (self.n_samples,2))
         self.assertEqual(ds.channels, ('FSC-H', 'FL3-H'))
 
@@ -2528,7 +2528,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[:1000]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (1000,6))
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
@@ -2539,7 +2539,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
         """
         ds = self.d[:1000,['SSC-H', 'FL3-H']]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.shape, (1000,2))
         self.assertEqual(ds.channels, ('SSC-H', 'FL3-H'))
 
@@ -2550,7 +2550,7 @@ class TestFCSDataSlicing(unittest.TestCase):
         """
         m = self.d[:,1]>500
         ds = self.d[m,:]
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
 
@@ -2579,7 +2579,7 @@ class TestFCSDataSlicing(unittest.TestCase):
         """
         ds = self.d.copy()
         ds[:,[1,2]] = 5
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
         np.testing.assert_array_equal(ds[:,0], self.d[:,0])
@@ -2595,7 +2595,7 @@ class TestFCSDataSlicing(unittest.TestCase):
         """
         ds = self.d.copy()
         ds[:,['SSC-H', 'FL1-H']] = 5
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         self.assertEqual(ds.channels,
             ('FSC-H', 'SSC-H', 'FL1-H', 'FL2-H', 'FL3-H', 'Time'))
         np.testing.assert_array_equal(ds[:,0], self.d[:,0])
@@ -2607,7 +2607,7 @@ class TestFCSDataSlicing(unittest.TestCase):
 
 class TestFCSDataOperations(unittest.TestCase):
     def setUp(self):
-        self.d = FlowCal.io.FCSData(filenames[0])
+        self.d = FlowCal.fcs_io.FCSData(filenames[0])
         self.n_samples = self.d.shape[0]
 
     def test_sum_integer(self):
@@ -2617,7 +2617,7 @@ class TestFCSDataOperations(unittest.TestCase):
         """
         ds = self.d + 3
         ds_array = self.d.view(np.ndarray) + 3
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         np.testing.assert_array_equal(ds, ds_array)
         
     def test_sqrt(self):
@@ -2627,7 +2627,7 @@ class TestFCSDataOperations(unittest.TestCase):
         """
         ds = np.sqrt(self.d)
         ds_array = np.sqrt(self.d.view(np.ndarray))
-        self.assertIsInstance(ds, FlowCal.io.FCSData)
+        self.assertIsInstance(ds, FlowCal.fcs_io.FCSData)
         np.testing.assert_array_equal(ds, ds_array)
 
     def test_sum(self):
@@ -2678,7 +2678,7 @@ class TestFCSDataOperations(unittest.TestCase):
         """
         m = np.mean(self.d, axis = 0)
         m_array = np.mean(self.d.view(np.ndarray), axis = 0)
-        self.assertIsInstance(m, FlowCal.io.FCSData)
+        self.assertIsInstance(m, FlowCal.fcs_io.FCSData)
         self.assertEqual(m.shape, m_array.shape)
         np.testing.assert_array_equal(m, m_array)
         

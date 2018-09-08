@@ -97,7 +97,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 
-import FlowCal.io
+import FlowCal.fcs_io
 import FlowCal.plot
 import FlowCal.gate
 import FlowCal.transform
@@ -384,7 +384,7 @@ def process_beads_table(beads_table,
             # Attempt to open file
             filename = os.path.join(base_dir, beads_row['File Path'])
             try:
-                beads_sample = FlowCal.io.FCSData(filename)
+                beads_sample = FlowCal.fcs_io.FCSData(filename)
             except IOError:
                 raise ExcelUIException("file \"{}\" not found".format(
                     beads_row['File Path']))
@@ -706,7 +706,7 @@ def process_samples_table(samples_table,
             # Attempt to open file
             filename = os.path.join(base_dir, sample_row['File Path'])
             try:
-                sample = FlowCal.io.FCSData(filename)
+                sample = FlowCal.fcs_io.FCSData(filename)
             except IOError:
                 raise ExcelUIException("file \"{}\" not found".format(
                     sample_row['File Path']))

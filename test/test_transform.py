@@ -11,7 +11,7 @@
 #   * numpy
 #
 
-import FlowCal.io
+import FlowCal.fcs_io
 import FlowCal.transform
 import numpy as np
 import unittest
@@ -157,7 +157,7 @@ class TestRFIFCSLog(unittest.TestCase):
     def setUp(self):
         self.channel_names = ['FSC-H', 'SSC-H', 'FL1-H', 
                                 'FL2-H', 'FL3-H', 'Time']
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
         self.n_samples = self.d.shape[0]
 
     def test_rfi_original_integrity(self):
@@ -356,7 +356,7 @@ class TestRFIFCSLinear(unittest.TestCase):
                               'mCherry-A',
                               'mCherry-H',
                               'Time']
-        self.d = FlowCal.io.FCSData('test/Data004.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data004.fcs')
         self.n_samples = self.d.shape[0]
 
     def test_rfi_original_integrity(self):
@@ -495,7 +495,7 @@ class TestMefFCS(unittest.TestCase):
     def setUp(self):
         self.channel_names = ['FSC-H', 'SSC-H', 'FL1-H', 
                                 'FL2-H', 'FL3-H', 'Time']
-        self.d = FlowCal.io.FCSData('test/Data001.fcs')
+        self.d = FlowCal.fcs_io.FCSData('test/Data001.fcs')
         self.n_samples = self.d.shape[0]
         self.sc0 = lambda x: x + 10
         self.sc1 = lambda x: x**2

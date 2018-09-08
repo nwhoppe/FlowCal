@@ -60,7 +60,7 @@ if __name__ == "__main__":
         # ``FlowCal.io.FCSData(filename)`` returns an object that represents
         # flow cytometry data loaded from file ``filename``.
         print("\nLoading file \"{}\"...".format(sample_filename))
-        sample = FlowCal.io.FCSData(sample_filename)
+        sample = FlowCal.fcs_io.FCSData(sample_filename)
         
         # Data loaded from an FCS file is in "Channel Units", the raw numbers
         # reported from the instrument's detectors. The FCS file also contains

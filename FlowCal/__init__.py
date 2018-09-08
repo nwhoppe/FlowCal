@@ -8,7 +8,7 @@
 # https://packaging.python.org/en/latest/single_source_version.html
 __version__ = '1.2.0'
 
-from . import io
+from . import fcs_io
 from . import excel_ui
 from . import gate
 from . import transform

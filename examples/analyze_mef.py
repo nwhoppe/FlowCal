@@ -71,7 +71,7 @@ if __name__ == "__main__":
     # ``FlowCal.io.FCSData(filename)`` returns an object that represents flow
     # cytometry data loaded from file ``filename``.
     print("Loading file \"{}\"...".format(beads_filename))
-    beads_sample = FlowCal.io.FCSData(beads_filename)
+    beads_sample = FlowCal.fcs_io.FCSData(beads_filename)
 
     # Data loaded from an FCS file is in "Channel Units", the raw numbers
     # reported from the instrument's detectors. The FCS file also contains
@@ -209,7 +209,7 @@ if __name__ == "__main__":
 
         # Load sample data from the corresponding FCS file.
         print("\nLoading file \"{}\"...".format(sample_filename))
-        sample = FlowCal.io.FCSData(sample_filename)
+        sample = FlowCal.fcs_io.FCSData(sample_filename)
         
         # Perform transformations
         print("Performing data transformation...")
