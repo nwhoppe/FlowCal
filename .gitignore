@@ -1,5 +1,3 @@
-build
-dist
-FlowCal.egg-info
+.idea/
 *.pyc
-*.ipynb_checkpoints
+*quick*
