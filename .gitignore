@@ -1,5 +1,8 @@
 build
 dist
+.idea/
+venv/
+usr/
 FlowCal.egg-info
 *.pyc
 *.ipynb_checkpoints
