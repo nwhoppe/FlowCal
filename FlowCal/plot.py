@@ -674,7 +674,7 @@ class _LogicleScale(matplotlib.scale.ScaleBase):
 
     def __init__(self, axis, **kwargs):
         # Run parent's constructor
-        matplotlib.scale.ScaleBase.__init__(self)
+        matplotlib.scale.ScaleBase.__init__(self, axis)
         # Initialize and store logicle transform object
         self._transform = _LogicleTransform(**kwargs)
 

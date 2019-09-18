@@ -43,13 +43,15 @@ def plot_expression_test(input_fcs_files, channel='APC'):
             gate_contour=contour_fsc_ssc,
             density_channels=['FSC-A', 'SSC-A'],
             density_params={'mode': 'scatter'},
+            hist_channels=[],
         )
         plt.subplot(2, 1, 2)
         FlowCal.plot.density_and_hist(
             fcs_data_fsc_ssc,
             gate_contour=contour_fsca_fsch,
             density_channels=['FSC-A', 'FSC-H'],
-            density_params={'mode': 'scatter'}
+            density_params={'mode': 'scatter'},
+            hist_channels=[],
         )
         plt.savefig('{0}.png'.format(file_base_name), dpi=300)
         label_gated_data_dict[file_base_name] = fcs_data_fsca_fsch[:, 'FL5-A']
